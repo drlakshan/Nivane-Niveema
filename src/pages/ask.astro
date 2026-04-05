@@ -10,8 +10,8 @@ import Layout from '../layouts/Layout.astro';
 
     <form id="ask-form" style="margin-top:1rem;">
       <label for="question" class="muted" style="display:block; margin-bottom:0.5rem;">Question</label>
-      <div style="border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,#fffdf9 0%,#faf5ee 100%); padding:0.85rem; box-shadow: var(--shadow);">
-        <textarea id="question" rows="4" placeholder="Ask about a sermon, phrase, or theme" style="border:0; background:transparent; padding:0.35rem 0.35rem 0.8rem; min-height:7rem; resize:vertical;"></textarea>
+      <div style="border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,#fffdf9 0%,#faf5ee 100%); padding:0.85rem; box-shadow: var(--shadow); max-width:100%;">
+        <textarea id="question" rows="6" placeholder="Ask about a sermon, phrase, or theme" style="border:0; background:transparent; padding:0.35rem 0.35rem 0.8rem; min-height:11rem; width:100%; resize:vertical; font-size:1.02rem; line-height:1.65;"></textarea>
         <div style="display:flex; justify-content:flex-end; align-items:center; gap:0.75rem; border-top:1px solid var(--line); padding-top:0.8rem; margin-top:0.25rem;">
           <span class="muted" style="font-size:0.92rem;">Citation-first answers</span>
           <button type="submit">Ask</button>
@@ -35,12 +35,36 @@ import Layout from '../layouts/Layout.astro';
     const answer = document.getElementById('answer');
     const citations = document.getElementById('citations');
 
+    function escapeHtml(text) {
+      return text
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;');
+    }
+
+    function renderMarkdown(text) {
+      const escaped = escapeHtml(text);
+      return escaped
+        .replace(/^###\s+(.*)$/gm, '<h3>$1</h3>')
+        .replace(/^##\s+(.*)$/gm, '<h2>$1</h2>')
+        .replace(/^#\s+(.*)$/gm, '<h1>$1</h1>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/^-\s+(.*)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+        .replace(/\n\n+/g, '</p><p>')
+        .replace(/^(?!<h\d>|<ul>|<li>|<p>|<\/ul>)(.+)$/gm, '<p>$1</p>')
+        .replace(/<p><\/p>/g, '')
+        .replace(/<p>(<h\d>.*<\/h\d>)<\/p>/g, '$1')
+        .replace(/<p>(<ul>.*<\/ul>)<\/p>/gs, '$1');
+    }
+
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
       const question = document.getElementById('question')?.value?.trim();
       if (!question) return;
 
-      answer.textContent = 'Thinking…';
+      answer.innerHTML = '<p class="muted">Thinking…</p>';
       citations.innerHTML = '';
 
       try {
@@ -52,11 +76,11 @@ import Layout from '../layouts/Layout.astro';
         const data = await res.json();
 
         if (!res.ok) {
-          answer.textContent = data.error || 'Request failed.';
+          answer.innerHTML = `<p class="muted">${data.error || 'Request failed.'}</p>`;
           return;
         }
 
-        answer.textContent = data.answer || 'No answer returned.';
+        answer.innerHTML = renderMarkdown(data.answer || 'No answer returned.');
         citations.innerHTML = (data.citations || []).map((item) => `
           <li style="margin-bottom:1rem;">
             <a href="${item.url}?q=${encodeURIComponent(question)}"><strong>${item.label}</strong></a><br />
@@ -64,7 +88,7 @@ import Layout from '../layouts/Layout.astro';
           </li>
         `).join('');
       } catch (error) {
-        answer.textContent = 'Could not reach the AI endpoint.';
+        answer.innerHTML = '<p class="muted">Could not reach the AI endpoint.</p>';
       }
     });
   </script>
