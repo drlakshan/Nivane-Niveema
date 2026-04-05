@@ -13,7 +13,7 @@ for (const file of files) {
   const raw = await readFile(path.join(sermonsDir, file), 'utf8');
   const parsed = matter(raw);
   passages.push({
-    slug: file.replace(/\.md$/, ''),
+    slug: parsed.data.slug ?? file.replace(/\.md$/, ''),
     title: parsed.data.title,
     sermon_number: parsed.data.sermon_number ?? null,
     text: parsed.content.trim(),

@@ -15,6 +15,7 @@ export interface Sermon {
     sermon_number?: number;
     section_order?: number;
     description?: string;
+    slug?: string;
   };
 }
 
@@ -25,10 +26,15 @@ export async function getSermons(): Promise<Sermon[]> {
   const sermons = await Promise.all(files.map(async (file) => {
     const raw = await readFile(path.join(sermonsDir, file), 'utf8');
     const parsed = matter(raw);
+    const content = parsed.content
+      .replaceAll('(./assets/', '(/assets/')
+      .replaceAll('](./assets/', '](/assets/')
+      .replaceAll('src="./assets/', 'src="/assets/');
+
     return {
-      slug: file.replace(/\.md$/, ''),
-      body: parsed.content,
-      html: await marked(parsed.content),
+      slug: (parsed.data.slug as string | undefined) ?? file.replace(/\.md$/, ''),
+      body: content,
+      html: await marked(content),
       data: parsed.data as Sermon['data'],
     };
   }));
