@@ -32,6 +32,8 @@ const EXPANSIONS: Record<string, string[]> = {
   nibbana: ['nibbāna', 'nibbana'],
   namarupa: ['name-and-form', 'nāmarūpa', 'nama-rupa', 'nāma-rūpa'],
   sankhara: ['saṅkhāra', 'sankhara', 'preparations', 'formations'],
+  hindrances: ['hindrance', 'hindrances', 'nīvaraṇa', 'nivarana', 'sensual desire', 'ill will', 'sloth', 'torpor', 'restlessness', 'worry', 'doubt'],
+  hindrance: ['hindrance', 'hindrances', 'nīvaraṇa', 'nivarana', 'sensual desire', 'ill will', 'sloth', 'torpor', 'restlessness', 'worry', 'doubt'],
 };
 
 function normalizeWord(word: string) {
@@ -131,7 +133,7 @@ async function askModel(question: string, citations: Passage[], env: Env) {
     .map((p, i) => `[${i + 1}] ${citationLabel(p)}\n${p.text}`)
     .join('\n\n');
 
-  const prompt = `Answer only from the provided passages. Be concise but informative. If the user asks for a concept, explain it using the retrieved passages rather than saying it is absent unless the passages truly do not discuss it. Quote briefly when helpful. If evidence is insufficient, say so explicitly. End with a short citation line using the provided labels.\n\nQuestion: ${question}\n\nPassages:\n${context}`;
+  const prompt = `Answer only from the provided passages. Be concise but informative. If the user asks for a concept, explain it using the retrieved passages rather than saying it is absent unless the passages truly do not discuss it. If a numbered set is requested, list the items only if the passages support them. Quote briefly when helpful. Prefer synthesis over refusal when relevant evidence exists. If evidence is insufficient, say so explicitly. End with a short citation line using the provided labels.\n\nQuestion: ${question}\n\nPassages:\n${context}`;
 
   const res = await fetch(`${baseUrl}/chat/completions`, {
     method: 'POST',
@@ -170,7 +172,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       .map((p) => ({ ...p, score: scorePassage(p.text, question) }))
       .filter((p) => p.score > 0)
       .sort((a, b) => b.score - a.score)
-      .slice(0, 6);
+      .slice(0, 8);
 
     if (!seedCitations.length) {
       return json({
