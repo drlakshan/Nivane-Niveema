@@ -21,6 +21,15 @@ export interface Sermon {
 
 const sermonsDir = path.join(process.cwd(), 'content', 'sermons');
 
+function slugify(value: string) {
+  return value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase();
+}
+
 export async function getSermons(): Promise<Sermon[]> {
   const files = (await readdir(sermonsDir)).filter((file) => file.endsWith('.md'));
   const sermons = await Promise.all(files.map(async (file) => {
@@ -31,8 +40,10 @@ export async function getSermons(): Promise<Sermon[]> {
       .replaceAll('](./assets/', '](/assets/')
       .replaceAll('src="./assets/', 'src="/assets/');
 
+    const fallbackSlug = slugify((parsed.data.title as string | undefined) ?? file.replace(/\.md$/, ''));
+
     return {
-      slug: (parsed.data.slug as string | undefined) ?? file.replace(/\.md$/, ''),
+      slug: (parsed.data.slug as string | undefined) ?? fallbackSlug,
       body: content,
       html: await marked(content),
       data: parsed.data as Sermon['data'],

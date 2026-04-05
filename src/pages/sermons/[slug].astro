@@ -4,13 +4,17 @@ import { getSermons } from '../../lib/sermons';
 
 export async function getStaticPaths() {
   const sermons = await getSermons();
-  return sermons.map((sermon) => ({
+  return sermons.map((sermon, index) => ({
     params: { slug: sermon.slug },
-    props: { sermon },
+    props: {
+      sermon,
+      previous: index > 0 ? sermons[index - 1] : null,
+      next: index < sermons.length - 1 ? sermons[index + 1] : null,
+    },
   }));
 }
 
-const { sermon } = Astro.props;
+const { sermon, previous, next } = Astro.props;
 ---
 
 <Layout title={`${sermon.data.title} | Nibbāna – The Mind Stilled`}>
@@ -20,4 +24,9 @@ const { sermon } = Astro.props;
     {sermon.data.sermon_number && <p class="muted">Sermon {sermon.data.sermon_number}</p>}
     <div set:html={sermon.html} />
   </article>
+
+  <nav class="card" style="margin-top: 1rem; display:flex; justify-content:space-between; gap:1rem;">
+    <div>{previous && <a href={`/sermons/${previous.slug}/`}>← {previous.data.title}</a>}</div>
+    <div>{next && <a href={`/sermons/${next.slug}/`}>{next.data.title} →</a>}</div>
+  </nav>
 </Layout>
