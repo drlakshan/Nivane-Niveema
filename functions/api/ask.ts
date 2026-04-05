@@ -21,13 +21,50 @@ function json(data: unknown, status = 200) {
   });
 }
 
+const STOPWORDS = new Set([
+  'the', 'a', 'an', 'and', 'or', 'of', 'to', 'in', 'on', 'for', 'with', 'about', 'from',
+  'what', 'is', 'are', 'was', 'were', 'does', 'do', 'did', 'can', 'could', 'would', 'should',
+  'please', 'describe', 'explain', 'tell', 'me', 'this', 'that', 'these', 'those', 'how'
+]);
+
+const EXPANSIONS: Record<string, string[]> = {
+  consciousness: ['consciousness', 'viññāṇa', 'vinnana', 'viññana', 'mind-consciousness'],
+  nibbana: ['nibbāna', 'nibbana'],
+  namarupa: ['name-and-form', 'nāmarūpa', 'nama-rupa', 'nāma-rūpa'],
+  sankhara: ['saṅkhāra', 'sankhara', 'preparations', 'formations'],
+};
+
+function normalizeWord(word: string) {
+  return word.toLowerCase().replace(/[^\p{L}\p{N}-]+/gu, '');
+}
+
+function expandedTerms(query: string) {
+  const raw = query.split(/\s+/).map(normalizeWord).filter(Boolean);
+  const terms = new Set<string>();
+  for (const word of raw) {
+    if (STOPWORDS.has(word)) continue;
+    terms.add(word);
+    for (const [key, values] of Object.entries(EXPANSIONS)) {
+      if (word === key || values.includes(word)) {
+        values.forEach((v) => terms.add(v.toLowerCase()));
+      }
+    }
+  }
+  return [...terms];
+}
+
+function paragraphNumber(id: string) {
+  const match = id.match(/-p(\d+)$/);
+  return match ? parseInt(match[1], 10) : null;
+}
+
 function scorePassage(text: string, query: string) {
   const lowerText = text.toLowerCase();
   const lowerQuery = query.toLowerCase();
-  const terms = lowerQuery.split(/\s+/).filter(Boolean);
-  let score = lowerText.includes(lowerQuery) ? 8 : 0;
+  const terms = expandedTerms(query);
+  let score = lowerText.includes(lowerQuery) ? 12 : 0;
   for (const term of terms) {
-    if (lowerText.includes(term)) score += 2;
+    if (lowerText.includes(term)) score += term.length > 6 ? 4 : 3;
   }
   return score;
 }
@@ -45,6 +82,33 @@ async function loadPassages(request: Request, env: Env): Promise<Passage[]> {
   return await res.json<Passage[]>();
 }
 
+function expandContext(passages: Passage[], seedCitations: Passage[]) {
+  const bySlug = new Map<string, Passage[]>();
+  for (const passage of passages) {
+    const list = bySlug.get(passage.slug) || [];
+    list.push(passage);
+    bySlug.set(passage.slug, list);
+  }
+
+  for (const list of bySlug.values()) {
+    list.sort((a, b) => (paragraphNumber(a.id) ?? 0) - (paragraphNumber(b.id) ?? 0));
+  }
+
+  const selected = new Map<string, Passage>();
+  for (const seed of seedCitations) {
+    const list = bySlug.get(seed.slug) || [];
+    const pNum = paragraphNumber(seed.id);
+    for (const item of list) {
+      const itemNum = paragraphNumber(item.id);
+      if (itemNum !== null && pNum !== null && Math.abs(itemNum - pNum) <= 1) {
+        selected.set(item.id, item);
+      }
+    }
+  }
+
+  return [...selected.values()].slice(0, 12);
+}
+
 async function askModel(question: string, citations: Passage[], env: Env) {
   if (!env.OPENAI_API_KEY) {
     return `Top matching passages are shown below. Configure OPENAI_API_KEY to enable synthesized answers.`;
@@ -56,7 +120,7 @@ async function askModel(question: string, citations: Passage[], env: Env) {
     .map((p, i) => `[${i + 1}] ${citationLabel(p)}\n${p.text}`)
     .join('\n\n');
 
-  const prompt = `Answer only from the provided passages. Be concise. Quote briefly when helpful. If evidence is insufficient, say so. End with a short citation line using the provided labels.\n\nQuestion: ${question}\n\nPassages:\n${context}`;
+  const prompt = `Answer only from the provided passages. Be concise but informative. If the user asks for a concept, explain it using the retrieved passages rather than saying it is absent unless the passages truly do not discuss it. Quote briefly when helpful. If evidence is insufficient, say so explicitly. End with a short citation line using the provided labels.\n\nQuestion: ${question}\n\nPassages:\n${context}`;
 
   const res = await fetch(`${baseUrl}/chat/completions`, {
     method: 'POST',
@@ -91,24 +155,25 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!question) return json({ error: 'Question is required.' }, 400);
 
     const passages = await loadPassages(context.request, context.env);
-    const citations = passages
+    const seedCitations = passages
       .map((p) => ({ ...p, score: scorePassage(p.text, question) }))
       .filter((p) => p.score > 0)
       .sort((a, b) => b.score - a.score)
-      .slice(0, 5);
+      .slice(0, 6);
 
-    if (!citations.length) {
+    if (!seedCitations.length) {
       return json({
         answer: 'No relevant passage was found for that question.',
         citations: [],
       });
     }
 
+    const citations = expandContext(passages, seedCitations);
     const answer = await askModel(question, citations, context.env);
 
     return json({
       answer,
-      citations: citations.map(({ score, ...rest }) => ({
+      citations: citations.map((rest) => ({
         ...rest,
         label: citationLabel(rest),
       })),
