@@ -8,27 +8,25 @@ const sermonCount = sermons.filter((item) => item.data.sermon_number).length;
 ---
 
 <Layout>
-  <section class="card hero">
-    <div class="eyebrow">Digital Edition</div>
-    <h2>Search, browse, and cite the text directly</h2>
-    <p class="muted">
-      A reliable Markdown-based edition of <em>Nibbāna – The Mind Stilled</em>, designed for direct access,
-      verifiable references, and future AI-assisted reading.
-    </p>
-
-    <div class="meta-grid">
-      <div class="meta-item">
-        <strong>{sermonCount}</strong><br />
-        <span class="muted">Sermons</span>
+  <section class="card hero-split">
+    <div class="hero-copy">
+      <div class="eyebrow">Digital Edition</div>
+      <h2>Direct access to the sermons, with references you can verify.</h2>
+      <p class="lede">
+        Browse the collection, search exact passages, and use the AI layer as a guided reading tool rather than a black box.
+      </p>
+      <div class="button-row">
+        <a class="button" href="/sermons">Browse sermons</a>
+        <a class="button secondary" href="/search">Search passages</a>
       </div>
-      <div class="meta-item">
-        <strong>{sermons.length}</strong><br />
-        <span class="muted">Total sections</span>
+      <div class="stats">
+        <div class="stat"><strong>{sermonCount}</strong><br /><span class="muted">Sermons</span></div>
+        <div class="stat"><strong>{sermons.length}</strong><br /><span class="muted">Total sections</span></div>
+        <div class="stat"><strong>¶ cited</strong><br /><span class="muted">Passage-level references</span></div>
       </div>
-      <div class="meta-item">
-        <strong>Searchable</strong><br />
-        <span class="muted">Passage-level results</span>
-      </div>
+    </div>
+    <div class="hero-panel">
+      <img src="/assets/images/desktop-cover.jpg" alt="Nibbāna – The Mind Stilled cover" />
     </div>
   </section>
 

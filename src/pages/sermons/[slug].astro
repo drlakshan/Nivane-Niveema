@@ -18,21 +18,21 @@ const { sermon, previous, next } = Astro.props;
 ---
 
 <Layout title={`${sermon.data.title} | Nibbāna – The Mind Stilled`}>
-  <article class="card">
+  <article class="card article-card">
     <p class="muted">{sermon.data.book}</p>
     <h2>{sermon.data.title}</h2>
     {sermon.data.sermon_number && <p class="muted">Sermon {sermon.data.sermon_number}</p>}
     {
       sermon.blocks.map((block, index) => (
         <section id={block.id} class="passage" style="scroll-margin-top: 1rem; margin-bottom: 1rem; display:grid; grid-template-columns: 3rem 1fr; gap: 0.75rem; align-items:start;">
-          <a href={`#${block.id}`} class="muted" style="text-decoration:none; font-size:0.85rem; text-align:right; padding-top:0.1rem;">¶{index + 1}</a>
+          <a href={`#${block.id}`} class="passage-number" style="text-decoration:none;">¶{index + 1}</a>
           <div set:html={block.html} />
         </section>
       ))
     }
   </article>
 
-  <nav class="card" style="margin-top: 1rem; display:flex; justify-content:space-between; gap:1rem;">
+  <nav class="card nav-card">
     <div>{previous && <a href={`/sermons/${previous.slug}/`}>← {previous.data.title}</a>}</div>
     <div>{next && <a href={`/sermons/${next.slug}/`}>{next.data.title} →</a>}</div>
   </nav>

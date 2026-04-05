@@ -6,7 +6,7 @@ import Layout from '../layouts/Layout.astro';
   <section class="card">
     <div class="eyebrow">Ask</div>
     <h2>Ask the text</h2>
-    <p class="muted">Answers are grounded in retrieved passages and should cite the source text.</p>
+    <p class="lede">Use the AI layer as a guided reader. Answers should be grounded in retrieved passages and linked back to the text.</p>
 
     <form id="ask-form">
       <label for="question" class="muted">Question</label>
@@ -15,12 +15,12 @@ import Layout from '../layouts/Layout.astro';
     </form>
   </section>
 
-  <section class="card">
+  <section class="card article-card">
     <h3>Answer</h3>
     <div id="answer" class="muted">No question submitted yet.</div>
   </section>
 
-  <section class="card">
+  <section class="card article-card">
     <h3>Citations</h3>
     <ul id="citations" class="list-clean muted"></ul>
   </section>

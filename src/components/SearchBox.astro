@@ -1,7 +1,7 @@
 <div class="card">
   <div class="eyebrow">Search</div>
   <h2>Find exact passages</h2>
-  <p class="muted">Search by phrase, doctrinal term, or keyword and jump to the matching paragraph.</p>
+  <p class="lede">Search by phrase, doctrinal term, or keyword and jump to the matching paragraph.</p>
   <input id="search-input" type="search" placeholder="Search sermons, phrases, or terms" />
   <div id="search-status" class="muted" style="margin-top:0.75rem;"></div>
   <ul id="search-results" class="list-clean" style="margin-top:1rem;"></ul>
@@ -79,7 +79,7 @@
 
     status.textContent = `${matches.length} matching passage(s)`;
     results.innerHTML = matches.map((item) => `
-      <li style="margin-bottom:1rem;">
+      <li style="margin-bottom:1rem; padding:0.95rem 1rem; border:1px solid var(--line); border-radius:16px; background:linear-gradient(180deg,#fffdf9 0%,#faf5ee 100%);">
         <a href="${item.url}?q=${encodeURIComponent(q)}"><strong>${item.title}</strong></a>
         <div class="muted" style="font-size:0.9rem; margin:0.2rem 0;">
           ${item.sermon_number ? `Sermon ${item.sermon_number} · ` : ''}${paragraphLabel(item.id)}

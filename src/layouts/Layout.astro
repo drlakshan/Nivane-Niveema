@@ -21,34 +21,35 @@ const {
     <meta name="description" content={description} />
     <style>
       :root {
-        --bg: #f5efe4;
-        --bg-soft: #fbf8f2;
-        --surface: rgba(255, 251, 245, 0.88);
-        --surface-strong: #fffdf9;
+        --bg: #f6f0e6;
+        --bg-2: #fbf8f3;
+        --surface: rgba(255, 252, 247, 0.86);
+        --surface-strong: #fffdfa;
+        --line: #e6d8c4;
         --text: #1f2937;
-        --muted: #6b7280;
-        --border: #e5d8c7;
-        --accent: #8a5a2b;
-        --accent-strong: #6f4319;
-        --shadow: 0 10px 30px rgba(88, 58, 25, 0.08);
-        --radius: 18px;
+        --muted: #667085;
+        --accent: #8b5e34;
+        --accent-2: #6f451c;
+        --shadow: 0 16px 40px rgba(92, 63, 27, 0.08);
+        --radius: 22px;
       }
 
       html {
-        font-family: "Georgia", "Iowan Old Style", "Palatino Linotype", serif;
-        background:
-          radial-gradient(circle at top, #fffaf2 0%, var(--bg) 45%, #efe6d8 100%);
+        font-family: "Georgia", "Iowan Old Style", serif;
         color: var(--text);
+        background:
+          radial-gradient(circle at top, rgba(255,255,255,0.75), transparent 38%),
+          linear-gradient(180deg, #fcf8f2 0%, var(--bg) 55%, #efe5d7 100%);
         scroll-behavior: smooth;
       }
 
       body {
         margin: 0;
-        line-height: 1.7;
+        line-height: 1.75;
       }
 
       a {
-        color: var(--accent-strong);
+        color: var(--accent-2);
         text-decoration: none;
       }
 
@@ -57,47 +58,52 @@ const {
       }
 
       .wrap {
-        max-width: 980px;
+        max-width: 1120px;
         margin: 0 auto;
-        padding: 1.5rem;
+        padding: 1.25rem;
       }
 
       header {
-        margin-bottom: 2rem;
-        padding: 1.25rem 0 0.75rem;
+        padding: 0.5rem 0 1rem;
       }
 
       .site-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.15rem;
+        border: 1px solid rgba(230, 216, 196, 0.85);
+        border-radius: 22px;
         background: var(--surface);
-        border: 1px solid rgba(229, 216, 199, 0.9);
-        border-radius: 24px;
         box-shadow: var(--shadow);
-        padding: 1.25rem 1.4rem;
-        backdrop-filter: blur(8px);
+        backdrop-filter: blur(10px);
       }
 
-      .site-title {
+      .brand-title {
         margin: 0;
-        font-size: clamp(2rem, 4vw, 3rem);
-        letter-spacing: -0.02em;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        line-height: 1.1;
       }
 
-      .site-subtitle {
-        margin: 0.35rem 0 1rem;
+      .brand-subtitle {
+        margin: 0.2rem 0 0;
         color: var(--muted);
+        font-size: 0.95rem;
       }
 
       nav {
         display: flex;
-        gap: 0.75rem;
         flex-wrap: wrap;
+        gap: 0.6rem;
       }
 
       nav a {
         display: inline-flex;
         align-items: center;
-        padding: 0.55rem 0.9rem;
-        border: 1px solid var(--border);
+        justify-content: center;
+        padding: 0.6rem 0.95rem;
+        border: 1px solid var(--line);
         border-radius: 999px;
         background: rgba(255,255,255,0.7);
         color: var(--text);
@@ -105,8 +111,8 @@ const {
       }
 
       nav a:hover {
-        background: white;
         text-decoration: none;
+        background: white;
       }
 
       main {
@@ -114,67 +120,116 @@ const {
         gap: 1.25rem;
       }
 
-      h1, h2, h3 {
-        line-height: 1.2;
-        margin-top: 0;
-      }
-
-      h2 {
-        font-size: 1.6rem;
-        margin-bottom: 0.75rem;
-      }
-
       .card {
         background: var(--surface-strong);
-        border: 1px solid var(--border);
+        border: 1px solid var(--line);
         border-radius: var(--radius);
-        padding: 1.25rem 1.4rem;
+        padding: 1.4rem;
         box-shadow: var(--shadow);
       }
 
-      .hero {
-        padding: 1.8rem 1.6rem;
+      .hero-split {
+        display: grid;
+        grid-template-columns: 1.2fr 0.9fr;
+        gap: 1rem;
+        align-items: stretch;
+      }
+
+      .hero-copy {
+        padding: 1.2rem;
+      }
+
+      .hero-copy h2 {
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        line-height: 1.05;
+        margin: 0 0 1rem;
+        letter-spacing: -0.03em;
+      }
+
+      .hero-panel {
+        min-height: 320px;
+        border-radius: calc(var(--radius) - 4px);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: #efe3d2;
+      }
+
+      .hero-panel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
       }
 
       .eyebrow {
+        margin: 0 0 0.8rem;
         text-transform: uppercase;
-        letter-spacing: 0.12em;
-        font-size: 0.78rem;
+        letter-spacing: 0.14em;
         color: var(--accent);
-        margin-bottom: 0.75rem;
+        font-size: 0.78rem;
+        font-weight: 700;
       }
 
-      .meta-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 0.75rem;
-        margin-top: 1rem;
-      }
-
-      .meta-item {
-        padding: 0.9rem 1rem;
-        background: var(--bg-soft);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-      }
-
-      .passage {
-        border-radius: 10px;
-      }
-
-      .passage:target {
-        background: #fff3bf;
-        padding: 0.35rem 0.6rem;
-      }
-
-      mark {
-        background: #ffe082;
-        padding: 0 0.15rem;
-        border-radius: 0.2rem;
-      }
-
+      .lede,
       .muted {
         color: var(--muted);
+      }
+
+      .lede {
+        font-size: 1.05rem;
+        max-width: 60ch;
+      }
+
+      .button-row {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        margin-top: 1.1rem;
+      }
+
+      .button,
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        background: linear-gradient(180deg, #9b6a38 0%, var(--accent-2) 100%);
+        color: white;
+        border: 0;
+        padding: 0.82rem 1.1rem;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+      }
+
+      .button.secondary {
+        background: white;
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+
+      .button:hover,
+      button:hover {
+        text-decoration: none;
+        filter: brightness(1.03);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin-top: 1.2rem;
+      }
+
+      .stat {
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 0.95rem 1rem;
+      }
+
+      .stat strong {
+        font-size: 1.35rem;
       }
 
       .list-clean {
@@ -183,21 +238,70 @@ const {
         margin: 0;
       }
 
-      .list-clean li + li {
-        margin-top: 0.85rem;
+      .sermon-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 0.9rem;
       }
 
-      .sermon-list a {
+      .sermon-grid a {
         display: block;
+        height: 100%;
         padding: 1rem 1.05rem;
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #fffdf9 0%, #faf5ee 100%);
       }
 
-      .sermon-list a:hover {
-        background: white;
+      .sermon-grid a:hover {
         text-decoration: none;
+        background: white;
+      }
+
+      .article-card {
+        max-width: 920px;
+        margin: 0 auto;
+      }
+
+      .article-card h2 {
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        margin-bottom: 0.4rem;
+      }
+
+      .article-card p,
+      .article-card li,
+      .article-card blockquote {
+        font-size: 1.04rem;
+      }
+
+      .article-card blockquote {
+        margin: 1.1rem 0;
+        padding: 0.8rem 1rem;
+        border-left: 3px solid #d7b48e;
+        background: #fcf8f2;
+        border-radius: 0 12px 12px 0;
+      }
+
+      .passage {
+        border-radius: 12px;
+      }
+
+      .passage:target {
+        background: #fff4c9;
+        padding: 0.4rem 0.7rem;
+      }
+
+      .passage-number {
+        color: #8a7b69;
+        font-size: 0.86rem;
+        text-align: right;
+        padding-top: 0.15rem;
+      }
+
+      mark {
+        background: #ffe082;
+        padding: 0 0.15rem;
+        border-radius: 0.2rem;
       }
 
       input, textarea, button {
@@ -207,43 +311,45 @@ const {
       input, textarea {
         width: 100%;
         box-sizing: border-box;
-        padding: 0.9rem 1rem;
+        padding: 0.95rem 1rem;
         border-radius: 14px;
-        border: 1px solid var(--border);
+        border: 1px solid var(--line);
         background: white;
         color: var(--text);
       }
 
       input:focus, textarea:focus {
-        outline: 2px solid rgba(138, 90, 43, 0.18);
+        outline: 2px solid rgba(139, 94, 52, 0.14);
         border-color: var(--accent);
       }
 
-      button {
-        background: linear-gradient(180deg, #9a6735 0%, var(--accent-strong) 100%);
-        color: white;
-        border: 0;
-        padding: 0.8rem 1.1rem;
-        border-radius: 12px;
-        cursor: pointer;
-        box-shadow: var(--shadow);
-      }
-
-      button:hover {
-        filter: brightness(1.03);
+      .nav-card {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
       }
 
       footer {
-        margin-top: 3rem;
-        padding: 1rem 0 2rem;
-        color: var(--muted);
         text-align: center;
+        color: var(--muted);
+        padding: 1.6rem 0 2.4rem;
+      }
+
+      @media (max-width: 900px) {
+        .hero-split,
+        .site-header {
+          grid-template-columns: 1fr;
+          display: grid;
+        }
       }
 
       @media (max-width: 640px) {
         .wrap { padding: 1rem; }
-        .site-header { padding: 1rem; }
-        .card, .hero { padding: 1rem; }
+        .card { padding: 1.05rem; }
+        .hero-copy { padding: 0.2rem; }
+        .stats { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -251,8 +357,10 @@ const {
     <div class="wrap">
       <header>
         <div class="site-header">
-          <h1 class="site-title">Nibbāna – The Mind Stilled</h1>
-          <p class="site-subtitle">A citation-first digital edition.</p>
+          <div>
+            <h1 class="brand-title">Nibbāna – The Mind Stilled</h1>
+            <p class="brand-subtitle">Searchable, citation-first, and built from the Markdown source.</p>
+          </div>
           <nav>
             <a href="/">Home</a>
             <a href="/sermons">Sermons</a>
