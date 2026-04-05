@@ -4,16 +4,33 @@ import SearchBox from '../components/SearchBox.astro';
 import { getSermons } from '../lib/sermons';
 
 const sermons = await getSermons();
+const sermonCount = sermons.filter((item) => item.data.sermon_number).length;
 ---
 
 <Layout>
-  <div class="card">
-    <h2>Overview</h2>
-    <p>
-      A searchable digital edition of <em>Nibbāna – The Mind Stilled</em>, grounded in the Markdown source text.
+  <section class="card hero">
+    <div class="eyebrow">Digital Edition</div>
+    <h2>Search, browse, and cite the text directly</h2>
+    <p class="muted">
+      A reliable Markdown-based edition of <em>Nibbāna – The Mind Stilled</em>, designed for direct access,
+      verifiable references, and future AI-assisted reading.
     </p>
-    <p>Current entries: <strong>{sermons.length}</strong></p>
-  </div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <strong>{sermonCount}</strong><br />
+        <span class="muted">Sermons</span>
+      </div>
+      <div class="meta-item">
+        <strong>{sermons.length}</strong><br />
+        <span class="muted">Total sections</span>
+      </div>
+      <div class="meta-item">
+        <strong>Searchable</strong><br />
+        <span class="muted">Passage-level results</span>
+      </div>
+    </div>
+  </section>
 
   <SearchBox />
 </Layout>

@@ -6,13 +6,24 @@ const sermons = await getSermons();
 ---
 
 <Layout title="Sermons | Nibbāna – The Mind Stilled">
-  <h2>Sermons</h2>
-  <ul>
-    {sermons.map((sermon) => (
-      <li>
-        <a href={`/sermons/${sermon.slug}/`}>{sermon.data.title}</a>
-        {sermon.data.sermon_number && ` — Sermon ${sermon.data.sermon_number}`}
-      </li>
-    ))}
-  </ul>
+  <section class="card">
+    <div class="eyebrow">Contents</div>
+    <h2>Browse the collection</h2>
+    <p class="muted">Front matter, all 33 sermons, and back matter in reading order.</p>
+  </section>
+
+  <section class="card sermon-list">
+    <ul class="list-clean">
+      {sermons.map((sermon) => (
+        <li>
+          <a href={`/sermons/${sermon.slug}/`}>
+            <strong>{sermon.data.title}</strong><br />
+            <span class="muted">
+              {sermon.data.sermon_number ? `Sermon ${sermon.data.sermon_number}` : 'Book section'}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 </Layout>

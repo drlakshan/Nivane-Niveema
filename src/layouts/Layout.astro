@@ -21,44 +21,246 @@ const {
     <meta name="description" content={description} />
     <style>
       :root {
-        --bg: #f8f5ef;
+        --bg: #f5efe4;
+        --bg-soft: #fbf8f2;
+        --surface: rgba(255, 251, 245, 0.88);
+        --surface-strong: #fffdf9;
         --text: #1f2937;
-        --muted: #5b6472;
-        --border: #ded6c8;
-        --accent: #7a4b1f;
-        --card: #fffdf8;
+        --muted: #6b7280;
+        --border: #e5d8c7;
+        --accent: #8a5a2b;
+        --accent-strong: #6f4319;
+        --shadow: 0 10px 30px rgba(88, 58, 25, 0.08);
+        --radius: 18px;
       }
-      html { font-family: Georgia, serif; background: var(--bg); color: var(--text); }
-      body { margin: 0; }
-      a { color: var(--accent); }
-      .wrap { max-width: 860px; margin: 0 auto; padding: 1.5rem; }
-      header { border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
-      nav { display: flex; gap: 1rem; flex-wrap: wrap; padding-bottom: 1rem; }
-      h1, h2, h3 { line-height: 1.2; }
-      .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
-      .passage:target { background: #fff3bf; border-radius: 8px; padding: 0.25rem 0.5rem; }
-      mark { background: #ffe082; padding: 0 0.15rem; }
-      .muted { color: var(--muted); }
-      footer { border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1rem; color: var(--muted); }
-      input, textarea, button { font: inherit; }
-      input, textarea { width: 100%; padding: 0.75rem; border-radius: 10px; border: 1px solid var(--border); background: white; }
-      button { background: var(--accent); color: white; border: 0; padding: 0.75rem 1rem; border-radius: 10px; cursor: pointer; }
-      ul { padding-left: 1.25rem; }
+
+      html {
+        font-family: "Georgia", "Iowan Old Style", "Palatino Linotype", serif;
+        background:
+          radial-gradient(circle at top, #fffaf2 0%, var(--bg) 45%, #efe6d8 100%);
+        color: var(--text);
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        line-height: 1.7;
+      }
+
+      a {
+        color: var(--accent-strong);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 1.5rem;
+      }
+
+      header {
+        margin-bottom: 2rem;
+        padding: 1.25rem 0 0.75rem;
+      }
+
+      .site-header {
+        background: var(--surface);
+        border: 1px solid rgba(229, 216, 199, 0.9);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        padding: 1.25rem 1.4rem;
+        backdrop-filter: blur(8px);
+      }
+
+      .site-title {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3rem);
+        letter-spacing: -0.02em;
+      }
+
+      .site-subtitle {
+        margin: 0.35rem 0 1rem;
+        color: var(--muted);
+      }
+
+      nav {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.55rem 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255,255,255,0.7);
+        color: var(--text);
+        font-size: 0.95rem;
+      }
+
+      nav a:hover {
+        background: white;
+        text-decoration: none;
+      }
+
+      main {
+        display: grid;
+        gap: 1.25rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.2;
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .card {
+        background: var(--surface-strong);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.4rem;
+        box-shadow: var(--shadow);
+      }
+
+      .hero {
+        padding: 1.8rem 1.6rem;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.78rem;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      .meta-item {
+        padding: 0.9rem 1rem;
+        background: var(--bg-soft);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+      }
+
+      .passage:target {
+        background: #fff3bf;
+        border-radius: 10px;
+        padding: 0.35rem 0.6rem;
+      }
+
+      mark {
+        background: #ffe082;
+        padding: 0 0.15rem;
+        border-radius: 0.2rem;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .list-clean {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .list-clean li + li {
+        margin-top: 0.85rem;
+      }
+
+      .sermon-list a {
+        display: block;
+        padding: 1rem 1.05rem;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--bg-soft);
+      }
+
+      .sermon-list a:hover {
+        background: white;
+        text-decoration: none;
+      }
+
+      input, textarea, button {
+        font: inherit;
+      }
+
+      input, textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.9rem 1rem;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: white;
+        color: var(--text);
+      }
+
+      input:focus, textarea:focus {
+        outline: 2px solid rgba(138, 90, 43, 0.18);
+        border-color: var(--accent);
+      }
+
+      button {
+        background: linear-gradient(180deg, #9a6735 0%, var(--accent-strong) 100%);
+        color: white;
+        border: 0;
+        padding: 0.8rem 1.1rem;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+      }
+
+      button:hover {
+        filter: brightness(1.03);
+      }
+
+      footer {
+        margin-top: 3rem;
+        padding: 1rem 0 2rem;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 640px) {
+        .wrap { padding: 1rem; }
+        .site-header { padding: 1rem; }
+        .card, .hero { padding: 1rem; }
+      }
     </style>
   </head>
   <body>
     <div class="wrap">
       <header>
-        <h1>Nibbāna – The Mind Stilled</h1>
-        <p class="muted">A citation-first digital edition.</p>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/sermons">Sermons</a>
-          <a href="/search">Search</a>
-          <a href="/ask">Ask</a>
-        </nav>
+        <div class="site-header">
+          <h1 class="site-title">Nibbāna – The Mind Stilled</h1>
+          <p class="site-subtitle">A citation-first digital edition.</p>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/sermons">Sermons</a>
+            <a href="/search">Search</a>
+            <a href="/ask">Ask</a>
+          </nav>
+        </div>
       </header>
-      <slot />
+      <main>
+        <slot />
+      </main>
       <footer>
         Source-first publishing. AI answers should always cite the text.
       </footer>
