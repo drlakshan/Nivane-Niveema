@@ -3,26 +3,26 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Ask | Nibbāna – The Mind Stilled">
-  <section class="card">
+  <section class="card article-card">
     <div class="eyebrow">Ask</div>
     <h2>Ask the text</h2>
     <p class="lede">Use the AI layer as a guided reader. Answers should be grounded in retrieved passages and linked back to the text.</p>
 
-    <form id="ask-form">
-      <label for="question" class="muted">Question</label>
-      <textarea id="question" rows="4" placeholder="Ask about a sermon, phrase, or theme"></textarea>
-      <p><button type="submit">Ask</button></p>
+    <form id="ask-form" style="margin-top:1rem;">
+      <label for="question" class="muted" style="display:block; margin-bottom:0.5rem;">Question</label>
+      <div style="border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,#fffdf9 0%,#faf5ee 100%); padding:0.85rem; box-shadow: var(--shadow);">
+        <textarea id="question" rows="4" placeholder="Ask about a sermon, phrase, or theme" style="border:0; background:transparent; padding:0.35rem 0.35rem 0.8rem; min-height:7rem; resize:vertical;"></textarea>
+        <div style="display:flex; justify-content:flex-end; align-items:center; gap:0.75rem; border-top:1px solid var(--line); padding-top:0.8rem; margin-top:0.25rem;">
+          <span class="muted" style="font-size:0.92rem;">Citation-first answers</span>
+          <button type="submit">Ask</button>
+        </div>
+      </div>
     </form>
   </section>
 
   <section class="card article-card">
     <h3>Answer</h3>
     <div id="answer" class="muted">No question submitted yet.</div>
-  </section>
-
-  <section class="card article-card">
-    <h3>Support notes</h3>
-    <ul id="support" class="list-clean muted"></ul>
   </section>
 
   <section class="card article-card">
@@ -33,7 +33,6 @@ import Layout from '../layouts/Layout.astro';
   <script is:inline>
     const form = document.getElementById('ask-form');
     const answer = document.getElementById('answer');
-    const support = document.getElementById('support');
     const citations = document.getElementById('citations');
 
     form?.addEventListener('submit', async (event) => {
@@ -42,7 +41,6 @@ import Layout from '../layouts/Layout.astro';
       if (!question) return;
 
       answer.textContent = 'Thinking…';
-      support.innerHTML = '';
       citations.innerHTML = '';
 
       try {
@@ -59,13 +57,6 @@ import Layout from '../layouts/Layout.astro';
         }
 
         answer.textContent = data.answer || 'No answer returned.';
-        support.innerHTML = (data.support || []).map((item) => `
-          <li style="margin-bottom:1rem;">
-            <strong>${item.title}</strong><br />
-            <span class="muted">${item.text.slice(0, 220)}${item.text.length > 220 ? '…' : ''}</span>
-          </li>
-        `).join('');
-
         citations.innerHTML = (data.citations || []).map((item) => `
           <li style="margin-bottom:1rem;">
             <a href="${item.url}?q=${encodeURIComponent(question)}"><strong>${item.label}</strong></a><br />
