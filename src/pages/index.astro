@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSermons } from '../lib/sermons';
+
+const sermons = await getSermons();
+---
+
+<Layout>
+  <div class="card">
+    <h2>Overview</h2>
+    <p>
+      This site will publish a reliable Markdown-based edition of <em>Nibbāna – The Mind Stilled</em>
+      with search and a thin AI layer.
+    </p>
+    <ul>
+      <li>Canonical source: Markdown</li>
+      <li>Public access: Astro site</li>
+      <li>Search: Pagefind</li>
+      <li>AI: thin citation-first layer</li>
+    </ul>
+  </div>
+
+  <p>Current sermon entries: <strong>{sermons.length}</strong></p>
+</Layout>

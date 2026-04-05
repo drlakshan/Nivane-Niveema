@@ -1,0 +1,3 @@
+name = "nivane-niveema-ai"
+main = "worker/api.ts"
+compatibility_date = "2026-04-05"

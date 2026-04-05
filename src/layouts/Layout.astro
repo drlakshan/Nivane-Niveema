@@ -1,0 +1,64 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Nibbāna – The Mind Stilled',
+  description = 'A searchable digital edition with citation-first access.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <style>
+      :root {
+        --bg: #f8f5ef;
+        --text: #1f2937;
+        --muted: #5b6472;
+        --border: #ded6c8;
+        --accent: #7a4b1f;
+        --card: #fffdf8;
+      }
+      html { font-family: Georgia, serif; background: var(--bg); color: var(--text); }
+      body { margin: 0; }
+      a { color: var(--accent); }
+      .wrap { max-width: 860px; margin: 0 auto; padding: 1.5rem; }
+      header { border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+      nav { display: flex; gap: 1rem; flex-wrap: wrap; padding-bottom: 1rem; }
+      h1, h2, h3 { line-height: 1.2; }
+      .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
+      .muted { color: var(--muted); }
+      footer { border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1rem; color: var(--muted); }
+      input, textarea, button { font: inherit; }
+      input, textarea { width: 100%; padding: 0.75rem; border-radius: 10px; border: 1px solid var(--border); background: white; }
+      button { background: var(--accent); color: white; border: 0; padding: 0.75rem 1rem; border-radius: 10px; cursor: pointer; }
+      ul { padding-left: 1.25rem; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Nibbāna – The Mind Stilled</h1>
+        <p class="muted">A citation-first digital edition.</p>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/sermons">Sermons</a>
+          <a href="/ask">Ask</a>
+        </nav>
+      </header>
+      <slot />
+      <footer>
+        Source-first publishing. AI answers should always cite the text.
+      </footer>
+    </div>
+  </body>
+</html>

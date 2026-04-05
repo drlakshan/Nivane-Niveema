@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getSermons } from '../../lib/sermons';
+
+export async function getStaticPaths() {
+  const sermons = await getSermons();
+  return sermons.map((sermon) => ({
+    params: { slug: sermon.slug },
+    props: { sermon },
+  }));
+}
+
+const { sermon } = Astro.props;
+---
+
+<Layout title={`${sermon.data.title} | Nibbāna – The Mind Stilled`}>
+  <article class="card">
+    <p class="muted">{sermon.data.book}</p>
+    <h2>{sermon.data.title}</h2>
+    {sermon.data.sermon_number && <p class="muted">Sermon {sermon.data.sermon_number}</p>}
+    <div set:html={sermon.html} />
+  </article>
+</Layout>

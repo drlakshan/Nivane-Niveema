@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Ask | Nibbāna – The Mind Stilled">
+  <div class="card">
+    <h2>Ask the Text</h2>
+    <p class="muted">Thin AI layer placeholder. Answers will be citation-first.</p>
+    <form id="ask-form">
+      <label for="question">Question</label>
+      <textarea id="question" rows="4" placeholder="Ask about a sermon or theme"></textarea>
+      <p>
+        <button type="submit">Ask</button>
+      </p>
+    </form>
+    <pre id="result" class="muted">Worker endpoint to be connected next.</pre>
+  </div>
+
+  <script>
+    const form = document.getElementById('ask-form');
+    const result = document.getElementById('result');
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const question = document.getElementById('question')?.value?.trim();
+      if (!question) return;
+      result.textContent = `Question received: ${question}\n\nNext step: connect Cloudflare Worker API.`;
+    });
+  </script>
+</Layout>

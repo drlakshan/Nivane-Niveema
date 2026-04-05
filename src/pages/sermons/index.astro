@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getSermons } from '../../lib/sermons';
+
+const sermons = await getSermons();
+---
+
+<Layout title="Sermons | Nibbāna – The Mind Stilled">
+  <h2>Sermons</h2>
+  <ul>
+    {sermons.map((sermon) => (
+      <li>
+        <a href={`/sermons/${sermon.slug}/`}>{sermon.data.title}</a>
+        {sermon.data.sermon_number && ` — Sermon ${sermon.data.sermon_number}`}
+      </li>
+    ))}
+  </ul>
+</Layout>
