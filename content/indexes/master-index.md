@@ -14,11 +14,20 @@ This folder contains editorial guides to the sermon corpus.
 - [[dependent-origination]]
 - [[name-and-form]]
 - [[nibbana]]
+- [[sankhara]]
+- [[craving-and-clinging]]
+- [[aggregates]]
+- [[satipatthana]]
+- [[cessation]]
 
 ## Glossary
 - [[nivarana]]
 - [[vinnana]]
 - [[namarupa]]
+- [[sankhara]]
+- [[tanha]]
+- [[upadana]]
+- [[nirodha]]
 
 ## Sermon summaries
 - [[sermon-03-summary]]

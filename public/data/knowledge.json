@@ -1,5 +1,28 @@
 [
   {
+    "slug": "aggregates",
+    "title": "Five Aggregates",
+    "type": "topic-index",
+    "aliases": [
+      "aggregates",
+      "khandha",
+      "skandha",
+      "form feeling perception formations consciousness"
+    ],
+    "text": "# Five Aggregates ## Concept The five aggregates provide a framework for analysing what is taken as a self. In this corpus they are often treated in relation to emptiness, instability, and deconstruction of identification. ## The five 1. Form 2. Feeling 3. Perception 4. Preparations / formations 5. Consciousness ## Best sermon entry points - Sermon 6 - Sermon 24 ## Start here - [[consciousness-vinnana]] - [[sankhara]]"
+  },
+  {
+    "slug": "cessation",
+    "title": "Cessation",
+    "type": "topic-index",
+    "aliases": [
+      "nirodha",
+      "cessation",
+      "ending"
+    ],
+    "text": "# Cessation ## Concept Cessation is a core key to understanding Nibbāna in this corpus. The sermons often explain liberation through cessation of conditions rather than through positing an eternal essence. ## Key lines of discussion - cessation of craving - cessation within dependent origination - cessation of name-and-form and consciousness in reciprocal dependence - cessation as stilling and peace ## Best sermon entry points - Sermon 1 - Sermon 3 - Sermon 15 ## Start here - [[nibbana]] - [[dependent-origination]] - [[name-and-form]]"
+  },
+  {
     "slug": "consciousness-vinnana",
     "title": "Consciousness (Viññāṇa)",
     "type": "topic-index",
@@ -9,6 +32,31 @@
       "vinnana"
     ],
     "text": "# Consciousness (Viññāṇa) ## Concept Consciousness is treated in this corpus as dependently arisen rather than as a permanent essence. Major discussions connect consciousness with name-and-form, the six sense-based consciousnesses, and the cessation dynamic relevant to Nibbāna. ## Key lines of discussion - Consciousness and name-and-form mutually condition one another. - There are six consciousnesses tied to the six sense spheres. - Consciousness is not a substantial self. - Some sermons discuss *anidassana viññāṇa* (non-manifestative consciousness). ## Where to start - [[sermon-03-summary]] - [[sermon-14-summary]] - [[sermon-24-summary]] ## Best sermon entry points - Sermon 3: consciousness and name-and-form - Sermon 14: non-manifestative consciousness and dwelling - Sermon 24: six consciousnesses and dependent arising"
+  },
+  {
+    "slug": "craving-and-clinging",
+    "title": "Craving and Clinging",
+    "type": "topic-index",
+    "aliases": [
+      "taṇhā",
+      "tanha",
+      "upādāna",
+      "upadana",
+      "craving",
+      "clinging"
+    ],
+    "text": "# Craving and Clinging ## Concept Craving and clinging are central to bondage and continuity in saṃsāra. The sermons repeatedly connect Nibbāna with the destruction of craving and with disentanglement from grasping. ## Key lines of discussion - craving as fuel for becoming - clinging as appropriation and holding on - release through dispassion and relinquishment ## Best sermon entry points - Sermon 1 - Sermon 15 - Sermon 23 ## Start here - [[nibbana]] - [[dependent-origination]]"
+  },
+  {
+    "slug": "dependent-origination",
+    "title": "Dependent Origination",
+    "type": "topic-index",
+    "aliases": [
+      "paṭicca samuppāda",
+      "paticca samuppada",
+      "dependent arising"
+    ],
+    "text": "# Dependent Origination ## Concept A central theme of the corpus. Dependent origination is treated not as abstract metaphysics alone, but as a practical key to understanding arising, cessation, bondage, and release. ## Key lines of discussion - conditional arising and conditional cessation - the link structure beginning with ignorance and formations - consciousness and name-and-form as a crucial reciprocal relation - insight into dependent origination as a path to disentanglement ## Best sermon entry points - Sermon 2 - Sermon 3 - Sermon 24 ## Start here - [[sermon-03-summary]] - [[sermon-24-summary]]"
   },
   {
     "slug": "five-hindrances",
@@ -26,7 +74,71 @@
     "title": "Master Index",
     "type": "index",
     "aliases": [],
-    "text": "# Master Index This folder contains editorial guides to the sermon corpus. ## Topic maps - [[five-hindrances]] - [[consciousness-vinnana]] - [[dependent-origination]] - [[name-and-form]] - [[nibbana]] ## Glossary - [[nivarana]] - [[vinnana]] - [[namarupa]] ## Sermon summaries - [[sermon-03-summary]] - [[sermon-14-summary]] - [[sermon-24-summary]] - [[sermon-31-summary]] Use these files as navigational aids. Canonical quotations remain in the sermon files."
+    "text": "# Master Index This folder contains editorial guides to the sermon corpus. ## Topic maps - [[five-hindrances]] - [[consciousness-vinnana]] - [[dependent-origination]] - [[name-and-form]] - [[nibbana]] - [[sankhara]] - [[craving-and-clinging]] - [[aggregates]] - [[satipatthana]] - [[cessation]] ## Glossary - [[nivarana]] - [[vinnana]] - [[namarupa]] - [[sankhara]] - [[tanha]] - [[upadana]] - [[nirodha]] ## Sermon summaries - [[sermon-03-summary]] - [[sermon-14-summary]] - [[sermon-24-summary]] - [[sermon-31-summary]] Use these files as navigational aids. Canonical quotations remain in the sermon files."
+  },
+  {
+    "slug": "name-and-form",
+    "title": "Name-and-Form",
+    "type": "topic-index",
+    "aliases": [
+      "nāmarūpa",
+      "nama-rupa",
+      "namarupa"
+    ],
+    "text": "# Name-and-Form ## Concept Name-and-form is one of the most important structural themes in the corpus. It is closely linked with consciousness and helps explain how lived experience and saṃsāric continuity are configured. ## Key lines of discussion - reciprocal relation between consciousness and name-and-form - cessation of one linked to cessation of the other - practical significance for understanding the experiential world ## Best sermon entry points - Sermon 3 - Sermon 24 ## Start here - [[sermon-03-summary]] - [[consciousness-vinnana]] - [[namarupa]]"
+  },
+  {
+    "slug": "nibbana",
+    "title": "Nibbāna",
+    "type": "topic-index",
+    "aliases": [
+      "nibbāna",
+      "nirvana",
+      "nibbana"
+    ],
+    "text": "# Nibbāna ## Concept The whole sermon series is oriented around clarifying the meaning of Nibbāna from the early discourses. It is approached as cessation, relinquishment, dispassion, and the stilling of all preparations. ## Key lines of discussion - destruction of craving - cessation and dispassion - stilling of all preparations - relinquishment of acquisitions and supports ## Best sermon entry points - Sermon 1 - Introduction - Sermon 14 - Sermon 15 ## Start here - Sermon 1 - Introduction - [[consciousness-vinnana]]"
+  },
+  {
+    "slug": "sankhara",
+    "title": "Saṅkhāra",
+    "type": "topic-index",
+    "aliases": [
+      "saṅkhāra",
+      "sankhara",
+      "preparations",
+      "formations"
+    ],
+    "text": "# Saṅkhāra ## Concept Saṅkhāra is a major interpretive term in the corpus. Depending on context it bears the sense of preparations, formations, activities, or fabrications relevant to dependent arising and the stilling that culminates in Nibbāna. ## Key lines of discussion - saṅkhāra in dependent origination - the stilling of all preparations - relation to intentional activity and constructing tendencies ## Best sermon entry points - Sermon 1 - Sermon 2 - Sermon 3 ## Start here - [[dependent-origination]] - [[sermon-03-summary]]"
+  },
+  {
+    "slug": "satipatthana",
+    "title": "Satipaṭṭhāna",
+    "type": "topic-index",
+    "aliases": [
+      "satipaṭṭhāna",
+      "satipatthana",
+      "establishments of mindfulness",
+      "mindfulness"
+    ],
+    "text": "# Satipaṭṭhāna ## Concept The sermons use the *Satipaṭṭhāna* framework as a practical doorway to insight. In later sermons this becomes especially important for themes like hindrances, mental observation, and right effort. ## Key lines of discussion - mindfulness as clear knowing of arising and passing - *dhammānupassanā* as an analytical contemplative framework - hindrances as objects of understanding and abandonment ## Best sermon entry points - Sermon 31 - Sermon 32 ## Start here - [[five-hindrances]] - [[sermon-31-summary]]"
+  },
+  {
+    "slug": "namarupa",
+    "title": "Nāmarūpa",
+    "type": "glossary",
+    "aliases": [
+      "name-and-form"
+    ],
+    "text": "# Nāmarūpa Usually translated as name-and-form. In this corpus it is especially important in its reciprocal relation with consciousness. ## Main references - Sermon 3 - Sermon 24"
+  },
+  {
+    "slug": "nirodha",
+    "title": "Nirodha",
+    "type": "glossary",
+    "aliases": [
+      "cessation"
+    ],
+    "text": "# Nirodha Cessation. One of the central interpretive keys of the series and essential for understanding Nibbāna. ## Main references - Sermon 1 - Sermon 3 - Sermon 15"
   },
   {
     "slug": "nivarana",
@@ -37,6 +149,35 @@
       "five hindrances"
     ],
     "text": "# Nīvaraṇa Pāli term for the hindrances: mental obstacles that block collectedness and insight. ## Standard five - sensual desire - ill will - sloth and torpor - restlessness and worry - doubt ## Main references in this corpus - Sermon 31 - Sermon 15"
+  },
+  {
+    "slug": "sankhara",
+    "title": "Saṅkhāra",
+    "type": "glossary",
+    "aliases": [
+      "preparations",
+      "formations"
+    ],
+    "text": "# Saṅkhāra A key Pāli term discussed in the sermons in relation to dependent origination and the stilling of all preparations. ## Main references - Sermon 1 - Sermon 2 - Sermon 3"
+  },
+  {
+    "slug": "tanha",
+    "title": "Taṇhā",
+    "type": "glossary",
+    "aliases": [
+      "craving"
+    ],
+    "text": "# Taṇhā Craving. A central driver of bondage and becoming, repeatedly contrasted with the dispassion and cessation associated with Nibbāna. ## Main references - Sermon 1 - Sermon 15 - Sermon 23"
+  },
+  {
+    "slug": "upadana",
+    "title": "Upādāna",
+    "type": "glossary",
+    "aliases": [
+      "clinging",
+      "grasping"
+    ],
+    "text": "# Upādāna Clinging or grasping. Closely linked with craving and becoming in dependent origination. ## Main references - Sermon 15 - Sermon 23"
   },
   {
     "slug": "vinnana",
