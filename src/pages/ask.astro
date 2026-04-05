@@ -21,6 +21,11 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <section class="card article-card">
+    <h3>Support notes</h3>
+    <ul id="support" class="list-clean muted"></ul>
+  </section>
+
+  <section class="card article-card">
     <h3>Citations</h3>
     <ul id="citations" class="list-clean muted"></ul>
   </section>
@@ -28,6 +33,7 @@ import Layout from '../layouts/Layout.astro';
   <script is:inline>
     const form = document.getElementById('ask-form');
     const answer = document.getElementById('answer');
+    const support = document.getElementById('support');
     const citations = document.getElementById('citations');
 
     form?.addEventListener('submit', async (event) => {
@@ -36,6 +42,7 @@ import Layout from '../layouts/Layout.astro';
       if (!question) return;
 
       answer.textContent = 'Thinking…';
+      support.innerHTML = '';
       citations.innerHTML = '';
 
       try {
@@ -52,6 +59,13 @@ import Layout from '../layouts/Layout.astro';
         }
 
         answer.textContent = data.answer || 'No answer returned.';
+        support.innerHTML = (data.support || []).map((item) => `
+          <li style="margin-bottom:1rem;">
+            <strong>${item.title}</strong><br />
+            <span class="muted">${item.text.slice(0, 220)}${item.text.length > 220 ? '…' : ''}</span>
+          </li>
+        `).join('');
+
         citations.innerHTML = (data.citations || []).map((item) => `
           <li style="margin-bottom:1rem;">
             <a href="${item.url}?q=${encodeURIComponent(question)}"><strong>${item.label}</strong></a><br />

@@ -1,0 +1,78 @@
+[
+  {
+    "slug": "consciousness-vinnana",
+    "title": "Consciousness (Viññāṇa)",
+    "type": "topic-index",
+    "aliases": [
+      "consciousness",
+      "viññāṇa",
+      "vinnana"
+    ],
+    "text": "# Consciousness (Viññāṇa) ## Concept Consciousness is treated in this corpus as dependently arisen rather than as a permanent essence. Major discussions connect consciousness with name-and-form, the six sense-based consciousnesses, and the cessation dynamic relevant to Nibbāna. ## Key lines of discussion - Consciousness and name-and-form mutually condition one another. - There are six consciousnesses tied to the six sense spheres. - Consciousness is not a substantial self. - Some sermons discuss *anidassana viññāṇa* (non-manifestative consciousness). ## Where to start - [[sermon-03-summary]] - [[sermon-14-summary]] - [[sermon-24-summary]] ## Best sermon entry points - Sermon 3: consciousness and name-and-form - Sermon 14: non-manifestative consciousness and dwelling - Sermon 24: six consciousnesses and dependent arising"
+  },
+  {
+    "slug": "five-hindrances",
+    "title": "Five Hindrances",
+    "type": "topic-index",
+    "aliases": [
+      "hindrances",
+      "nīvaraṇa",
+      "nivarana"
+    ],
+    "text": "# Five Hindrances ## Concept The five hindrances are mental obstacles that obstruct clarity, concentration, and liberating insight. In this corpus, the clearest practical discussion is linked to *dhammānupassanā* in the *Satipaṭṭhāna* framework and to the work of right endeavour. ## The five 1. Sensual desire 2. Ill will 3. Sloth and torpor 4. Restlessness and worry 5. Doubt ## Where to start - [[sermon-31-summary]] - [[sermon-15-summary]] - [[Nibbana - The Mind Stilled/36 Sermon 31|Sermon 31]] - [[Nibbana - The Mind Stilled/20 Sermon 15|Sermon 15]] ## Important notes - Sermon 31 discusses the hindrances under *dhammānupassanā* and connects them to right effort. - Sermon 15 links discursive thought with the abandoning of mental hindrances. - Not every sermon lists all five individually, so concept questions should consult both this topic file and the cited sermons. ## Citation guide Prefer citing Sermon 31 when the question is about practical observation and abandonment of hindrances."
+  },
+  {
+    "slug": "master-index",
+    "title": "Master Index",
+    "type": "index",
+    "aliases": [],
+    "text": "# Master Index This folder contains editorial guides to the sermon corpus. ## Topic maps - [[five-hindrances]] - [[consciousness-vinnana]] - [[dependent-origination]] - [[name-and-form]] - [[nibbana]] ## Glossary - [[nivarana]] - [[vinnana]] - [[namarupa]] ## Sermon summaries - [[sermon-03-summary]] - [[sermon-14-summary]] - [[sermon-24-summary]] - [[sermon-31-summary]] Use these files as navigational aids. Canonical quotations remain in the sermon files."
+  },
+  {
+    "slug": "nivarana",
+    "title": "Nīvaraṇa",
+    "type": "glossary",
+    "aliases": [
+      "hindrances",
+      "five hindrances"
+    ],
+    "text": "# Nīvaraṇa Pāli term for the hindrances: mental obstacles that block collectedness and insight. ## Standard five - sensual desire - ill will - sloth and torpor - restlessness and worry - doubt ## Main references in this corpus - Sermon 31 - Sermon 15"
+  },
+  {
+    "slug": "vinnana",
+    "title": "Viññāṇa",
+    "type": "glossary",
+    "aliases": [
+      "consciousness"
+    ],
+    "text": "# Viññāṇa Usually translated as consciousness. In this corpus it is discussed in relation to dependent arising, name-and-form, the sixfold division of consciousness, and cessation. ## Main references - Sermon 3 - Sermon 14 - Sermon 24"
+  },
+  {
+    "slug": "sermon-03-summary",
+    "title": "Sermon 3 Summary",
+    "type": "summary",
+    "aliases": [],
+    "text": "# Sermon 3 Summary ## Main themes - dependent arising - the vortex between consciousness and name-and-form - cessation through breaking that reciprocal support ## Why this matters This is one of the best starting points in the corpus for questions about consciousness, name-and-form, and the structure of saṃsāric continuity."
+  },
+  {
+    "slug": "sermon-14-summary",
+    "title": "Sermon 14 Summary",
+    "type": "summary",
+    "aliases": [],
+    "text": "# Sermon 14 Summary ## Main themes - the *Dhātuvibhaṅgasutta* - consciousness as tending to dwell or abide - non-manifestative consciousness ## Why this matters Useful for questions about the nature of consciousness, its support, and its transformation in relation to detachment."
+  },
+  {
+    "slug": "sermon-24-summary",
+    "title": "Sermon 24 Summary",
+    "type": "summary",
+    "aliases": [],
+    "text": "# Sermon 24 Summary ## Main themes - the six consciousnesses - dependent arising on a dyad - consciousness as conditioned rather than substantial ## Why this matters A strong sermon for explicit discussion of consciousness and its sixfold differentiation."
+  },
+  {
+    "slug": "sermon-31-summary",
+    "title": "Sermon 31 Summary",
+    "type": "summary",
+    "aliases": [],
+    "text": "# Sermon 31 Summary ## Main themes - *satipaṭṭhāna* - *dhammānupassanā* - hindrances as objects of mindful comprehension - relation between hindrances and right effort ## Why this matters This is the main entry point in the corpus for practical discussion of the hindrances and their abandoning."
+  }
+]
