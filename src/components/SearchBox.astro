@@ -26,6 +26,30 @@
     return (start > 0 ? '…' : '') + text.slice(start, end) + (end < text.length ? '…' : '');
   }
 
+  function paragraphLabel(id) {
+    const match = id.match(/-p(\d+)$/);
+    if (!match) return '';
+    return `¶${parseInt(match[1], 10)}`;
+  }
+
+  function escapeHtml(text) {
+    return text
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;');
+  }
+
+  function highlight(text, query) {
+    const safe = escapeHtml(text);
+    const terms = query.split(/\s+/).filter(Boolean).sort((a, b) => b.length - a.length);
+    let highlighted = safe;
+    for (const term of terms) {
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      highlighted = highlighted.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
+    }
+    return highlighted;
+  }
+
   async function loadPassages() {
     if (!passages) {
       const res = await fetch('/data/passages.json');
@@ -54,8 +78,11 @@
     status.textContent = `${matches.length} matching passage(s)`;
     results.innerHTML = matches.map((item) => `
       <li style="margin-bottom:1rem;">
-        <a href="${item.url}"><strong>${item.title}</strong></a><br />
-        <span class="muted">${excerpt(item.text, q)}</span>
+        <a href="${item.url}"><strong>${item.title}</strong></a>
+        <div class="muted" style="font-size:0.9rem; margin:0.2rem 0;">
+          ${item.sermon_number ? `Sermon ${item.sermon_number} · ` : ''}${paragraphLabel(item.id)}
+        </div>
+        <span class="muted">${highlight(excerpt(item.text, q), q)}</span>
       </li>
     `).join('');
   });
