@@ -75,6 +75,17 @@ function citationLabel(p: Passage) {
   return `${p.title}${p.sermon_number ? ` (Sermon ${p.sermon_number})` : ''}, ${paragraph}`;
 }
 
+function looksLikeInsufficientAnswer(answer: string) {
+  const lower = answer.toLowerCase();
+  return lower.includes('insufficient evidence') || lower.includes('not explicitly mentioned') || lower.includes('do not specifically mention');
+}
+
+function buildExtractiveFallback(question: string, citations: Passage[]) {
+  const top = citations.slice(0, 3);
+  const bullets = top.map((p) => `- ${citationLabel(p)}: ${p.text.slice(0, 260)}${p.text.length > 260 ? '…' : ''}`);
+  return `I found relevant passages for “${question}”. Here are the strongest matches:\n\n${bullets.join('\n')}\n\nThese passages are likely more useful than saying the topic is absent.`;
+}
+
 async function loadPassages(request: Request, env: Env): Promise<Passage[]> {
   const url = new URL('/data/passages.json', request.url);
   const res = await env.ASSETS.fetch(url);
@@ -169,7 +180,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     const citations = expandContext(passages, seedCitations);
-    const answer = await askModel(question, citations, context.env);
+    let answer = await askModel(question, citations, context.env);
+    if (looksLikeInsufficientAnswer(answer) && citations.length) {
+      answer = buildExtractiveFallback(question, citations);
+    }
 
     return json({
       answer,
