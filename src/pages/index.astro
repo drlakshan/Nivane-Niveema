@@ -8,7 +8,7 @@ const sermonCount = sermons.filter((item) => item.data.sermon_number).length;
 ---
 
 <Layout>
-  <section class="card hero-split">
+  <section class="card">
     <div class="hero-copy">
       <div class="eyebrow">Digital Edition</div>
       <h2>Direct access to the sermons, with references you can verify.</h2>
@@ -24,9 +24,6 @@ const sermonCount = sermons.filter((item) => item.data.sermon_number).length;
         <div class="stat"><strong>{sermons.length}</strong><br /><span class="muted">Total sections</span></div>
         <div class="stat"><strong>¶ cited</strong><br /><span class="muted">Passage-level references</span></div>
       </div>
-    </div>
-    <div class="hero-panel">
-      <img src="/assets/images/desktop-cover.jpg" alt="Nibbāna – The Mind Stilled cover" />
     </div>
   </section>
 
