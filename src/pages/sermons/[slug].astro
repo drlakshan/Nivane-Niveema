@@ -24,7 +24,7 @@ const { sermon, previous, next } = Astro.props;
     {sermon.data.sermon_number && <p class="muted">Sermon {sermon.data.sermon_number}</p>}
     {
       sermon.blocks.map((block) => (
-        <section id={block.id} style="scroll-margin-top: 1rem; margin-bottom: 1rem;">
+        <section id={block.id} class="passage" style="scroll-margin-top: 1rem; margin-bottom: 1rem;">
           <a href={`#${block.id}`} class="muted" style="text-decoration:none; font-size:0.85rem;">¶</a>
           <div set:html={block.html} />
         </section>
@@ -36,4 +36,71 @@ const { sermon, previous, next } = Astro.props;
     <div>{previous && <a href={`/sermons/${previous.slug}/`}>← {previous.data.title}</a>}</div>
     <div>{next && <a href={`/sermons/${next.slug}/`}>{next.data.title} →</a>}</div>
   </nav>
+  <script is:inline>
+    function highlightInElement(element, query) {
+      const terms = query.split(/\s+/).filter(Boolean).sort((a, b) => b.length - a.length);
+      if (!terms.length) return;
+
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (!node.nodeValue?.trim()) return NodeFilter.FILTER_REJECT;
+          const parentTag = node.parentElement?.tagName;
+          if (parentTag === 'SCRIPT' || parentTag === 'STYLE' || parentTag === 'MARK') {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      const textNodes = [];
+      let current;
+      while ((current = walker.nextNode())) textNodes.push(current);
+
+      for (const node of textNodes) {
+        let replaced = false;
+        let fragment = document.createDocumentFragment();
+        let text = node.nodeValue;
+        let remaining = text;
+
+        while (remaining.length) {
+          let earliestIndex = -1;
+          let matchedTerm = null;
+
+          for (const term of terms) {
+            const index = remaining.toLowerCase().indexOf(term.toLowerCase());
+            if (index !== -1 && (earliestIndex === -1 || index < earliestIndex)) {
+              earliestIndex = index;
+              matchedTerm = term;
+            }
+          }
+
+          if (earliestIndex === -1 || !matchedTerm) {
+            fragment.appendChild(document.createTextNode(remaining));
+            break;
+          }
+
+          if (earliestIndex > 0) {
+            fragment.appendChild(document.createTextNode(remaining.slice(0, earliestIndex)));
+          }
+
+          const mark = document.createElement('mark');
+          mark.textContent = remaining.slice(earliestIndex, earliestIndex + matchedTerm.length);
+          fragment.appendChild(mark);
+          replaced = true;
+          remaining = remaining.slice(earliestIndex + matchedTerm.length);
+        }
+
+        if (replaced) {
+          node.parentNode.replaceChild(fragment, node);
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const query = new URLSearchParams(window.location.search).get('q')?.trim();
+      if (!query) return;
+      const target = window.location.hash ? document.querySelector(window.location.hash) : null;
+      highlightInElement(target || document.querySelector('article'), query);
+    });
+  </script>
 </Layout>

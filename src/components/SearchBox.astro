@@ -78,7 +78,7 @@
     status.textContent = `${matches.length} matching passage(s)`;
     results.innerHTML = matches.map((item) => `
       <li style="margin-bottom:1rem;">
-        <a href="${item.url}"><strong>${item.title}</strong></a>
+        <a href="${item.url}?q=${encodeURIComponent(q)}"><strong>${item.title}</strong></a>
         <div class="muted" style="font-size:0.9rem; margin:0.2rem 0;">
           ${item.sermon_number ? `Sermon ${item.sermon_number} · ` : ''}${paragraphLabel(item.id)}
         </div>
