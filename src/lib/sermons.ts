@@ -3,10 +3,17 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 
+export interface SermonBlock {
+  id: string;
+  markdown: string;
+  html: string;
+  text: string;
+}
+
 export interface Sermon {
   slug: string;
   body: string;
-  html: string;
+  blocks: SermonBlock[];
   data: {
     title: string;
     author?: string;
@@ -30,22 +37,40 @@ function slugify(value: string) {
     .toLowerCase();
 }
 
+function normalizeContent(content: string) {
+  return content
+    .replaceAll('(./assets/', '(/assets/')
+    .replaceAll('](./assets/', '](/assets/')
+    .replaceAll('src="./assets/', 'src="/assets/');
+}
+
+function splitBlocks(content: string) {
+  return content
+    .split(/\n\s*\n/g)
+    .map((block) => block.trim())
+    .filter(Boolean);
+}
+
 export async function getSermons(): Promise<Sermon[]> {
   const files = (await readdir(sermonsDir)).filter((file) => file.endsWith('.md'));
   const sermons = await Promise.all(files.map(async (file) => {
     const raw = await readFile(path.join(sermonsDir, file), 'utf8');
     const parsed = matter(raw);
-    const content = parsed.content
-      .replaceAll('(./assets/', '(/assets/')
-      .replaceAll('](./assets/', '](/assets/')
-      .replaceAll('src="./assets/', 'src="/assets/');
-
+    const content = normalizeContent(parsed.content);
     const fallbackSlug = slugify((parsed.data.title as string | undefined) ?? file.replace(/\.md$/, ''));
+    const slug = (parsed.data.slug as string | undefined) ?? fallbackSlug;
+    const rawBlocks = splitBlocks(content);
+    const blocks = await Promise.all(rawBlocks.map(async (block, index) => ({
+      id: `${slug}-p${String(index + 1).padStart(3, '0')}`,
+      markdown: block,
+      html: await marked(block),
+      text: block.replace(/\s+/g, ' ').trim(),
+    })));
 
     return {
-      slug: (parsed.data.slug as string | undefined) ?? fallbackSlug,
+      slug,
       body: content,
-      html: await marked(content),
+      blocks,
       data: parsed.data as Sermon['data'],
     };
   }));

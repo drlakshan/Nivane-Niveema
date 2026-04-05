@@ -1,19 +1,62 @@
-<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
-
 <div class="card">
   <h2>Search</h2>
-  <div id="search"></div>
+  <input id="search-input" type="search" placeholder="Search sermons, phrases, or terms" />
+  <div id="search-status" class="muted" style="margin-top:0.75rem;"></div>
+  <ul id="search-results" style="margin-top:1rem;"></ul>
 </div>
 
-<script is:inline src="/pagefind/pagefind-ui.js"></script>
 <script is:inline>
-  window.addEventListener('DOMContentLoaded', () => {
-    if (window.PagefindUI) {
-      new window.PagefindUI({
-        element: '#search',
-        showSubResults: true,
-        resetStyles: false,
-      });
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  const status = document.getElementById('search-status');
+  let passages = null;
+
+  function scorePassage(text, query) {
+    const lowerText = text.toLowerCase();
+    const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+    return terms.reduce((score, term) => score + (lowerText.includes(term) ? 1 : 0), 0);
+  }
+
+  function excerpt(text, query) {
+    const lowerText = text.toLowerCase();
+    const idx = lowerText.indexOf(query.toLowerCase());
+    if (idx === -1) return text.slice(0, 220) + (text.length > 220 ? '…' : '');
+    const start = Math.max(0, idx - 80);
+    const end = Math.min(text.length, idx + query.length + 140);
+    return (start > 0 ? '…' : '') + text.slice(start, end) + (end < text.length ? '…' : '');
+  }
+
+  async function loadPassages() {
+    if (!passages) {
+      const res = await fetch('/data/passages.json');
+      passages = await res.json();
     }
+    return passages;
+  }
+
+  input?.addEventListener('input', async (event) => {
+    const q = event.target.value.trim();
+    results.innerHTML = '';
+
+    if (!q) {
+      status.textContent = '';
+      return;
+    }
+
+    status.textContent = 'Searching…';
+    const all = await loadPassages();
+    const matches = all
+      .map((item) => ({ ...item, score: scorePassage(item.text, q) }))
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 12);
+
+    status.textContent = `${matches.length} matching passage(s)`;
+    results.innerHTML = matches.map((item) => `
+      <li style="margin-bottom:1rem;">
+        <a href="${item.url}"><strong>${item.title}</strong></a><br />
+        <span class="muted">${excerpt(item.text, q)}</span>
+      </li>
+    `).join('');
   });
 </script>

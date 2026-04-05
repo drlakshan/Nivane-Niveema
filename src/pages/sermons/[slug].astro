@@ -22,7 +22,14 @@ const { sermon, previous, next } = Astro.props;
     <p class="muted">{sermon.data.book}</p>
     <h2>{sermon.data.title}</h2>
     {sermon.data.sermon_number && <p class="muted">Sermon {sermon.data.sermon_number}</p>}
-    <div set:html={sermon.html} />
+    {
+      sermon.blocks.map((block) => (
+        <section id={block.id} style="scroll-margin-top: 1rem; margin-bottom: 1rem;">
+          <a href={`#${block.id}`} class="muted" style="text-decoration:none; font-size:0.85rem;">¶</a>
+          <div set:html={block.html} />
+        </section>
+      ))
+    }
   </article>
 
   <nav class="card" style="margin-top: 1rem; display:flex; justify-content:space-between; gap:1rem;">

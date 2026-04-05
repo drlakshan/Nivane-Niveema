@@ -15,17 +15,31 @@ function slugify(value) {
     .toLowerCase();
 }
 
+function splitBlocks(content) {
+  return content
+    .split(/\n\s*\n/g)
+    .map((block) => block.trim())
+    .filter(Boolean);
+}
+
 const files = (await readdir(sermonsDir)).filter((file) => file.endsWith('.md'));
 const passages = [];
 
 for (const file of files) {
   const raw = await readFile(path.join(sermonsDir, file), 'utf8');
   const parsed = matter(raw);
-  passages.push({
-    slug: parsed.data.slug ?? slugify(parsed.data.title ?? file.replace(/\.md$/, '')),
-    title: parsed.data.title,
-    sermon_number: parsed.data.sermon_number ?? null,
-    text: parsed.content.trim(),
+  const slug = parsed.data.slug ?? slugify(parsed.data.title ?? file.replace(/\.md$/, ''));
+  const blocks = splitBlocks(parsed.content);
+
+  blocks.forEach((block, index) => {
+    passages.push({
+      id: `${slug}-p${String(index + 1).padStart(3, '0')}`,
+      slug,
+      title: parsed.data.title,
+      sermon_number: parsed.data.sermon_number ?? null,
+      url: `/sermons/${slug}/#${slug}-p${String(index + 1).padStart(3, '0')}`,
+      text: block.replace(/\s+/g, ' ').trim(),
+    });
   });
 }
 
