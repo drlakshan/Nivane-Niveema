@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+
+<div class="card">
+  <h2>Search</h2>
+  <div id="search"></div>
+</div>
+
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.PagefindUI) {
+      new window.PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        resetStyles: false,
+      });
+    }
+  });
+</script>
