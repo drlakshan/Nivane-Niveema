@@ -136,6 +136,9 @@ function expandContext(passages: Passage[], seedCitations: Passage[]) {
 }
 
 async function askModel(question: string, supportDocs: SupportDoc[], citations: Passage[], env: Env) {
+  // AI feature temporarily disabled
+  return `Top matching support notes and passages are shown below.`;
+
   if (!env.OPENAI_API_KEY) {
     return `Top matching support notes and passages are shown below. Configure OPENAI_API_KEY to enable synthesized answers.`;
   }
